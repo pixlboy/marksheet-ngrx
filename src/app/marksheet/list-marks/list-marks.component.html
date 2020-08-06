@@ -1,0 +1,58 @@
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Marks (Out of 100)</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students;let index = index">
+      <td class="fix-width">
+        <input *ngIf="editIdx === index"
+          class="editable-cell" [(ngModel)]="name" 
+          type="text" name="name"/>
+          <span *ngIf="editIdx !== index">{{student.name}}</span>
+      </td>
+      <td ngClass="{'failure': student.marks < passingMarks, 'passed': student.marks >= passingMarks}">
+        <input *ngIf="editIdx === index"
+          class="editable-cell" [(ngModel)]="marks" 
+          type="text" name="marks"/>
+        <span *ngIf="editIdx !== index">{{student.marks}}</span>
+      </td>
+      <td>
+        <a 
+          href="javascript:void(0)"
+          class="danger action-link" 
+          (click)="deleteRecord(index)">
+          Delete
+        </a>
+        <a
+          href="javascript:void(0)"
+          *ngIf="editIdx !== index"
+          class="primary action-link"
+          (click)="editRecord(index)">
+          Edit
+        </a>
+        <a 
+          href="javascript:void(0)"
+          *ngIf="editIdx === index"
+          class="success action-link" 
+          (click)="saveRecord(index)">
+          Save
+        </a>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <span class="legend legend-pass"></span>
+        <span class="legend legend-fail"></span>  
+      </td>
+    </tr>
+  </tfoot>
+</table>
+

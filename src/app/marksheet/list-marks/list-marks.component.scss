@@ -1,0 +1,53 @@
+@import '../../../styles.scss';
+
+table{
+	width:100%;
+	table-layout:fixed;
+	tr{
+		height: 40px;
+	}
+	th{
+		text-align:center;
+		font-size:16px;
+		font-weight: 700;
+	}
+	td{
+		text-align:center;
+		padding: 5px;
+		line-height: 30px;
+	}
+	.editable-cell{
+		width: 50%;
+		height: 30px;
+	}
+	.action-link{
+		width: 80px;
+		display: inline-block;
+	}
+	
+	.legend{
+		height: 18px;
+		width: 18px;
+		display:inline-block;
+		border-radius: 50%;
+		margin: 0px 25px;
+		line-height: 20px;
+		&:after{
+			content: '';
+			margin: 0 23px;
+		    line-height: 20px;
+		}
+	}
+	.legend-fail{
+		background-color: $color-danger;
+		&:after{
+			content: 'Fail';
+		}
+	}
+	.legend-pass{
+		background-color: $color-success;
+		&:after{
+			content: 'Pass';
+		}
+	}
+}

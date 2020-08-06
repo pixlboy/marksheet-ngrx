@@ -1,0 +1,42 @@
+$font-stack 			: Helvetica, sans-serif;
+$color-black 			: #000;
+$color-primary	 		: #007bff;
+$color-danger			: #dc3545;
+$color-success			: #28a745;
+
+body {
+	font: 100% $font-stack;
+	color: $color-black;
+	background: #ccc;
+	height: 100%;
+}
+  
+h1,h2,h3,h4,h5,h6{
+	margin:0
+}
+
+ul,li{
+	margin:0;
+	padding:0;
+	list-style-type:none
+}
+
+/*Bootstrap Overrides*/
+.container-fluid{
+	padding:0
+}
+
+/*=========================================================*/
+
+.danger{
+	color:  $color-danger;
+}
+.success{
+	color:  $color-success;	
+}
+.primary{
+	color:  $color-primary	
+}
+.btn{
+    margin-right: 5px;
+}

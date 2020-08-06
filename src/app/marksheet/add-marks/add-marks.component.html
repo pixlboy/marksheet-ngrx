@@ -1,0 +1,34 @@
+<div class="add-marks-wrapper">
+  <form name="studentForm" class="form-row">
+    <div class="form-group col-auto">
+      <label for="name" class="">Name</label>
+      <input 
+          class="form-control" [(ngModel)]="name" 
+          type="text" name="name"/>
+    </div>
+    <div class="form-group col-auto">
+      <label for="marks" class="">Marks</label>
+      <input 
+          class="form-control" [(ngModel)]="marks" 
+          type="text" name="marks"/>
+    </div>
+    
+    <div class="form-group col-auto button-grp">
+      <button class="btn btn-success" 
+        *ngIf="!toggleAddEditBtn"
+        (click)="addStudent()"
+        [disabled]="!name || !marks">
+        Add
+      </button>
+        
+      <button class="btn btn-primary" 
+        *ngIf="!toggleAddEditBtn"
+        (click)="resetForm()" 
+        [disabled]="!name && !marks">
+        Reset
+      </button>
+        
+    </div>
+   
+    </form>
+</div>
