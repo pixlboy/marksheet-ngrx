@@ -59,8 +59,9 @@ export class ListMarksComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
     this.sub = this.store.select('marksheet').subscribe(marks => {
-      if(marks){
-        this.markList = marks;
+      console.log(marks.markList);
+      if(marks.markList){
+        this.markList = marks.markList;
       }
     });
   }
