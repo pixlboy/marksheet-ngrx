@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { IMarks } from '../marksheet.interface';
+import * as MarksheetActions from '../state/marksheet.actions';
 
 @Component({
   selector: 'marksheet-add-marks',
@@ -7,21 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddMarksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   name: string = null;
   marks: number = null;
-  students = [];
+  markList = [];
   		
   addStudent(){
-    this.students.push(
-      {
-        name : this.name,
-        marks : this.marks
-      }
-    );
-  
-    this.setMarks(this.students);
+    const payload: IMarks = {
+      name : this.name,
+      marks : this.marks
+    };
+    MarksheetActions.addMarks({ value: payload });
     this.resetForm();
   }
 
@@ -43,7 +43,7 @@ export class AddMarksComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.students = this.getMarkSheet();
+    //this.students = this.getMarkSheet();
   }
 
 };

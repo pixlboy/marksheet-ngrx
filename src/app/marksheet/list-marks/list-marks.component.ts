@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'marksheet-list-marks',
   templateUrl: './list-marks.component.html',
   styleUrls: ['./list-marks.component.scss']
 })
-export class ListMarksComponent implements OnInit {
+export class ListMarksComponent implements OnInit, OnDestroy {
 
-  students = [];
+  constructor(private store: Store<any>) { }
+
+  sub = null;
+  markList = [];
   passingMarks: number = 65;
   editIdx: number = null;
   name: string = null;
@@ -30,12 +34,12 @@ export class ListMarksComponent implements OnInit {
   }
 
   deleteRecord(index){
-    this.students.splice(index,1);
-    this.deleteMarks(this.students);
+    this.markList.splice(index,1);
+    this.deleteMarks(this.markList);
   }
 
   saveRecord(){
-    this.students.splice(
+    this.markList.splice(
       this.editIdx,
       1,
       {
@@ -43,18 +47,26 @@ export class ListMarksComponent implements OnInit {
         marks : this.marks
       }
     );
-	  this.updateMarks(this.students);
+	  this.updateMarks(this.markList);
     this.editIdx = null;
   }
 
   editRecord(idx){
     this.editIdx = idx;
-    this.name = this.students[idx].name;
-    this.marks = this.students[idx].marks;
+    this.name = this.markList[idx].name;
+    this.marks = this.markList[idx].marks;
   }
 
   ngOnInit(){
-    this.students = this.getMarkSheet();
+    this.sub = this.store.select('marksheet').subscribe(marks => {
+      if(marks){
+        this.markList = marks;
+      }
+    });
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();
   }
 
 }

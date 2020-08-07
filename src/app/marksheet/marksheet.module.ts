@@ -5,12 +5,15 @@ import { HomeComponent } from './home/home.component';
 import { ListMarksComponent } from './list-marks/list-marks.component';
 import { AddMarksComponent } from './add-marks/add-marks.component';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import * as fromMarksheet from './state/marksheet.reducer';
 
 @NgModule({
   imports: [
     CommonModule,
     MarksheetRoutingModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forFeature(fromMarksheet.scoreboardFeatureKey, fromMarksheet.reducer),      //register the state container
   ],
   declarations: [HomeComponent, ListMarksComponent, AddMarksComponent]
 })

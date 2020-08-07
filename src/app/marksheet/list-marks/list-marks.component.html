@@ -7,18 +7,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let student of students;let index = index">
+    <tr *ngFor="let record of markList;let index = index">
       <td class="fix-width">
         <input *ngIf="editIdx === index"
           class="editable-cell" [(ngModel)]="name" 
           type="text" name="name"/>
-          <span *ngIf="editIdx !== index">{{student.name}}</span>
+          <span *ngIf="editIdx !== index">{{record.name}}</span>
       </td>
-      <td ngClass="{'failure': student.marks < passingMarks, 'passed': student.marks >= passingMarks}">
+      <td ngClass="{'failure': record.marks < passingMarks, 'passed': record.marks >= passingMarks}">
         <input *ngIf="editIdx === index"
           class="editable-cell" [(ngModel)]="marks" 
           type="text" name="marks"/>
-        <span *ngIf="editIdx !== index">{{student.marks}}</span>
+        <span *ngIf="editIdx !== index">{{record.marks}}</span>
       </td>
       <td>
         <a 
@@ -42,6 +42,9 @@
           Save
         </a>
       </td>
+    </tr>
+    <tr *ngIf="markList.length === 0">
+      <td colspan="3">No records found.</td>
     </tr>
   </tbody>
   <tfoot>

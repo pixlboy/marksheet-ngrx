@@ -11,8 +11,12 @@ const routes: Routes = [
     loadChildren: './summary/summary.module#SummaryModule'
   },
   {
+    path: 'homepage',
+    loadChildren: './landing/landing.module#LandingModule'
+  },
+  {
     path: '',
-    redirectTo: 'marksheet',
+    redirectTo: 'homepage',
     pathMatch: 'full'
   }
 ];
