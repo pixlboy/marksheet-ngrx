@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IMarks } from '../marksheet.interface';
+import { State } from '../state/marksheet.reducer';
 import * as MarksheetActions from '../state/marksheet.actions';
+import { Marks } from '../marksheet.interface';
 
 @Component({
   selector: 'marksheet-add-marks',
@@ -10,18 +11,18 @@ import * as MarksheetActions from '../state/marksheet.actions';
 })
 export class AddMarksComponent implements OnInit {
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<State>) { }
 
   name: string = null;
   marks: number = null;
   markList = [];
   		
   addStudent(){
-    const payload: IMarks = {
+    const marks: Marks = {
       name : this.name,
       marks : this.marks
     };
-    MarksheetActions.addMarks({ value: payload });
+    this.store.dispatch(MarksheetActions.addRecord({ marks }));
     this.resetForm();
   }
 

@@ -1,4 +1,4 @@
-export interface IMarks{
+export interface Marks {
     name : string,
     marks : number
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { State, getMarkList, getEditId } from '../state/marksheet.reducer';
+import * as MarksheetActions from '../state/marksheet.actions';
+import { Marks } from '../marksheet.interface';
 
 @Component({
   selector: 'marksheet-list-marks',
@@ -8,7 +11,7 @@ import { Store } from '@ngrx/store';
 })
 export class ListMarksComponent implements OnInit, OnDestroy {
 
-  constructor(private store: Store<any>) { }
+  constructor(private store: Store<State>) { }
 
   sub = null;
   markList = [];
@@ -17,57 +20,61 @@ export class ListMarksComponent implements OnInit, OnDestroy {
   name: string = null;
   marks: number = null;
 
-  getMarkSheet() {
-    if(window.localStorage){
-      return JSON.parse(window.localStorage["marksheet"]);
-    }
-    console.log("Your Browser doesn't supports local storage !!");
-    return [];
-  }
+  // getMarkSheet() {
+  //   if(window.localStorage){
+  //     return JSON.parse(window.localStorage["marksheet"]);
+  //   }
+  //   console.log("Your Browser doesn't supports local storage !!");
+  //   return [];
+  // }
 
-  deleteMarks(value) {
-    window.localStorage.setItem("marksheet", JSON.stringify(value));
-  }
+  // deleteMarks(value) {
+  //   window.localStorage.setItem("marksheet", JSON.stringify(value));
+  // }
 
-  updateMarks(value) {
-    window.localStorage.setItem("marksheet", JSON.stringify(value));
-  }
+  // updateMarks(value) {
+  //   window.localStorage.setItem("marksheet", JSON.stringify(value));
+  // }
 
   deleteRecord(index){
-    this.markList.splice(index,1);
-    this.deleteMarks(this.markList);
+    this.store.dispatch(MarksheetActions.deleteRecord({ id: index }));
   }
 
   saveRecord(){
-    this.markList.splice(
-      this.editIdx,
-      1,
-      {
+    const marks: Marks = {
         name : this.name,
         marks : this.marks
-      }
-    );
-	  this.updateMarks(this.markList);
-    this.editIdx = null;
+    };
+    this.store.dispatch(MarksheetActions.saveRecord({ id: this.editIdx, marks: marks }));
+    this.setEditId(null);
   }
 
-  editRecord(idx){
-    this.editIdx = idx;
-    this.name = this.markList[idx].name;
-    this.marks = this.markList[idx].marks;
+  setEditId(index){
+    this.store.dispatch(MarksheetActions.setEditId({ id: index }));
+  }
+
+  private resetForm(){
+    this.name = null;
+	  this.marks = null;
   }
 
   ngOnInit(){
-    this.sub = this.store.select('marksheet').subscribe(marks => {
-      console.log(marks.markList);
-      if(marks.markList){
-        this.markList = marks.markList;
+    this.store.select(getMarkList).subscribe(markList => {
+      this.markList = markList;
+    });
+    this.store.select(getEditId).subscribe(id => {
+      this.editIdx = id;
+      if(this.editIdx !== null){
+          this.name = this.markList[this.editIdx].name;
+          this.marks = this.markList[this.editIdx].marks;
+      } else{
+        this.resetForm();
       }
     });
   }
 
   ngOnDestroy(){
-    this.sub.unsubscribe();
+    //this.sub.unsubscribe();
   }
 
 }
