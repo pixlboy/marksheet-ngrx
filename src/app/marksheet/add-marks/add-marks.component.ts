@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../state/marksheet.reducer';
+import { State, getSuccess } from '../state/marksheet.reducer';
 import * as MarksheetActions from '../state/marksheet.actions';
 import { Marks } from '../marksheet.interface';
 
@@ -22,7 +22,7 @@ export class AddMarksComponent implements OnInit {
       name : this.name,
       marks : this.marks
     };
-    this.store.dispatch(MarksheetActions.addRecord({ marks }));
+    this.store.dispatch(MarksheetActions.addRecordAPI({ marks }));
     this.resetForm();
   }
 
@@ -31,20 +31,14 @@ export class AddMarksComponent implements OnInit {
 	  this.marks = null;
   }
 
-  setMarks(value) {
-    window.localStorage.setItem("marksheet", JSON.stringify(value));
-  }
-
-  getMarkSheet() {
-    if(window.localStorage){
-      return JSON.parse(window.localStorage["marksheet"]);
-    }
-    console.log("Your Browser doesn't supports local storage !!");
-    return [];
-  }
-
   ngOnInit(){
-    //this.students = this.getMarkSheet();
+
+    this.store.select(getSuccess).subscribe((data) => {
+      if(data === 'Add Success'){
+        this.store.dispatch(MarksheetActions.loadMarksheetAPI());
+      }
+    });
+
   }
 
 };

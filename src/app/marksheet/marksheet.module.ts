@@ -7,12 +7,15 @@ import { AddMarksComponent } from './add-marks/add-marks.component';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { reducer, featureKey } from './state/marksheet.reducer';
+import { MarksheetEffects } from './state/marksheet.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
     CommonModule,
     MarksheetRoutingModule,
     FormsModule,
+    EffectsModule.forFeature([MarksheetEffects]),
     StoreModule.forFeature(featureKey, reducer),      //register the state container
   ],
   declarations: [HomeComponent, ListMarksComponent, AddMarksComponent]

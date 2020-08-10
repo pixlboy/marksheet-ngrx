@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let record of markList;let index = index">
+    <tr *ngFor="let record of markList$ | async;let index = index">
       <td class="fix-width">
         <input *ngIf="editIdx === index"
           class="editable-cell" [(ngModel)]="name" 
@@ -43,8 +43,8 @@
         </a>
       </td>
     </tr>
-    <tr *ngIf="markList.length === 0">
-      <td colspan="3">No records found.</td>
+    <tr *ngIf="errorMsg$ | async as errorMsg">
+      <td colspan="3">{{errorMsg}}</td>
     </tr>
   </tbody>
   <tfoot>

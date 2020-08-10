@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,11 @@ import { environment } from '../environments/environment';
     StoreModule.forRoot({},{}),      //register the state container
     AppRoutingModule, 
     StoreDevtoolsModule.instrument({ 
-      name: 'Marksheer Ngrx Demo',
+      name: 'Marksheet Ngrx Demo',
       maxAge: 25, logOnly: 
-      environment.production })
+      environment.production 
+    }), 
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]
